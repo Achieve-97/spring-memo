@@ -37,13 +37,13 @@ public class PostController {
 
     // 게시물 1개 수정
     @PutMapping("/api/posts/{postId}")
-    public void updatePost(@PathVariable Long postId, @RequestBody UpdatePostRequestDto updatePostRequest) {
-        postService.updatePost(postId, updatePostRequest);
+    public void update(@PathVariable Long postId, @RequestBody UpdatePostRequestDto updatePostRequest) {
+        postService.update(postId, updatePostRequest);
     }
 
     // 게시물 삭제
     @DeleteMapping("/api/posts/{postId}")
-    public void deletePost(@PathVariable Long postId, @RequestBody DeletePostRequestDto deletePostRequest) {
-        postService.deletePost(postId, deletePostRequest);
+    public void delete(@PathVariable Long postId, @RequestBody DeletePostRequestDto deletePostRequest) {
+        postService.delete(postId, deletePostRequest);
     }
 }

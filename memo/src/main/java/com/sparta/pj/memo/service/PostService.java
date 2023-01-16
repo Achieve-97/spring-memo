@@ -38,30 +38,30 @@ public class PostService {
 
     @Transactional
     public PostResponseDto getPost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("id 없음"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         return new PostResponseDto(post);
     }
 
     @Transactional
-    public void updatePost(Long postId, UpdatePostRequestDto updatePostRequest) {
-        Post postSaved = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("id 없음"));
+    public void update(Long postId, UpdatePostRequestDto updatePostRequest) {
+        Post postSaved = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         if (postSaved.isValidPassword(updatePostRequest.getPassword())) {
             postSaved.update(updatePostRequest.getTitle(), updatePostRequest.getWriter(), updatePostRequest.getContent());
             postRepository.save(postSaved);
         } else {
-            throw new IllegalArgumentException("패스워드가 틀렸습니다!");
+            throw new IllegalArgumentException("패스워드 불일치");
         }
     }
 
     @Transactional
-    public void deletePost(Long postId, DeletePostRequestDto deletePostRequest) {
-        Post postDelete = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("id 없음"));
+    public void delete(Long postId, DeletePostRequestDto deletePostRequest) {
+        Post postDelete = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String password = deletePostRequest.getPassword();
         if (postDelete.isValidPassword(password)) {
             postRepository.delete(postDelete);
-            System.out.println("삭제에 성공했습니다.");
+            System.out.println("삭제 성공.");
         } else {
-            throw new IllegalArgumentException("패스워드가 다릅니다!");
+            throw new IllegalArgumentException("패스워드 불일치");
         }
     }
 
